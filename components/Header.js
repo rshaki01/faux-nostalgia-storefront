@@ -2,19 +2,19 @@ import React from 'react'
 
 const Header = () => {
   return (
-    <div className='min-w-full'>
-        <div className='flex justify-between bg-black px-12 py-5'>
-            <div className='flex text-white gap-8'>
-                <div className='border border-white p-2'>
+    <div className='min-w-full mt-5 mb-24'>
+        <div className='flex justify-between px-12 py-5 items-center'>
+            <div className='flex gap-8 items-center'>
+                <div className='p-2 text-4xl'>
                     Faux Nostalgia
                 </div>
                 <div className='flex gap-2'>
-                    <div className='border border-white p-2'>Home</div>
-                    <div className='border border-white p-2'>Contact</div>
-                    <div className='border border-white p-2'>FAQ</div>
+                    <div className='p-2'>Home</div>
+                    <div className='p-2'>Contact</div>
+                    <div className='p-2'>FAQ</div>
                 </div>
             </div>
-            <div className='text-white'>Cart</div>
+            <div className='p-2'>Cart</div>
         </div>
     </div>
   )
