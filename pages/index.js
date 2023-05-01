@@ -1,47 +1,36 @@
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
-import Stripe from 'stripe'
 import Router from 'next/router'
 import ProductCard from '@/components/ProductCard'
+import { fetchProducts } from '@/utils/Shopify'
 
-export async function getServerSideProps(context) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET ?? '', {
-    apiVersion: '2020-08-27'
-  })
+export default function Home() {
 
-  const res = await stripe.prices.list({
-    limit: 10,
-    expand: ['data.product']
-  })
+  const [products, setProducts] = useState([]);
 
-  const prices = res.data.filter(price => price.active)
-
-  return {
-    props: { prices }
-  }
-}
-
-export default function Home({prices}) {
-
-  async function checkout() {
-    const lineItems = [{
-      price: prices[0].id,
-      quantity: 1
-    }]
-    const res = await fetch('api/checkout', {
-      method: 'POST',
-      body: JSON.stringify({lineItems})
-    })
-    console.log(res)
-    const data = await res.json()
-    Router.push(data.session.url);
-  } 
+  useEffect(() => {
+    async function getProducts() {
+      const products = await fetchProducts();
+      setProducts(products)
+    }
+    getProducts();
+  }, [])
 
 
   return (
-    <div className='px-16 h-[70vh]'>
+    <div className='flex justify-center'>
+      <Head>
+        <title>Faux Nostalgia</title>
+      </Head>
       {/* Card HTML below */}
-      <ProductCard />
+      <div className='grid grid-cols-1 gap-10 md:grid-cols-1'>
+        {products.map((product, index) => {
+            return <ProductCard key={index} id={product.id} product={product}/>
+        })}
+      </div>
+      <div id='product-component-1682487638588'></div>
+      
     </div>
   )
 }
