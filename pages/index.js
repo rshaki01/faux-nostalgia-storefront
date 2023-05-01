@@ -5,17 +5,29 @@ import Router from 'next/router'
 import ProductCard from '@/components/ProductCard'
 import { fetchProducts } from '@/utils/Shopify'
 
-export default function Home() {
+export async function getStaticProps() {
+  const products = await fetchProducts();
+  return {
+    props: {
+      products
+    },
+    revalidate: 1,
+  }
+}
 
-  const [products, setProducts] = useState([]);
+export default function Home({products}) {
 
-  useEffect(() => {
-    async function getProducts() {
-      const products = await fetchProducts();
-      setProducts(products)
-    }
-    getProducts();
-  }, [])
+  // const [products, setProducts] = useState([]);
+
+  // useEffect(() => {
+  //   async function getProducts() {
+  //     const products = await fetchProducts();
+  //     setProducts(products)
+  //   }
+  //   getProducts();
+  // }, [])
+
+  console.log(products);
 
 
   return (

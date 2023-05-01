@@ -16,6 +16,7 @@ async function fetchProducts() {
                       id
                       title
                       description
+                      handle
                       images(first: 3) {
                         edges {
                           node {
@@ -47,6 +48,7 @@ async function fetchProducts() {
       id: node.id,
       title: node.title,
       description: node.description,
+      handle: node.handle,
       imageSrc: node.images.edges[0]?.node.url ?? '',
       imageSrc1: node.images.edges[1]?.node.url ?? '',
       imageSrc2: node.images.edges[2]?.node.url ?? '',
