@@ -10,7 +10,7 @@ async function fetchProducts() {
         body: JSON.stringify({
           query: `
             query {
-                products(first: 1) {
+                products(first: 2) {
                   edges {
                     node {
                       id

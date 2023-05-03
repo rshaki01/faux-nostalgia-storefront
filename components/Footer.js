@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div className='min-w-full border border-top-black'>
+    <div className='min-w-full'>
       <div className='flex justify-center'>
         &copy; 2023 Faux Nostalgia. All rights reserved.
       </div>

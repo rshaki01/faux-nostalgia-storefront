@@ -27,22 +27,17 @@ export default function Home({products}) {
   //   getProducts();
   // }, [])
 
-  console.log(products);
-
-
   return (
     <div className='flex justify-center'>
       <Head>
         <title>Faux Nostalgia</title>
       </Head>
       {/* Card HTML below */}
-      <div className='grid grid-cols-1 gap-10 md:grid-cols-1'>
+      <div className='grid grid-cols-1 gap-10 md:grid-cols-2'>
         {products.map((product, index) => {
             return <ProductCard key={index} id={product.id} product={product}/>
         })}
-      </div>
-      <div id='product-component-1682487638588'></div>
-      
+      </div>      
     </div>
   )
 }
