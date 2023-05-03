@@ -55,7 +55,7 @@ export async function getStaticProps({params}) {
         id: 1,
         title: data.product.title,
         description: data.product.description,
-        imageSrc: data.product.images.edges[0].node.url
+        imageSrc: data.product.images.edges[0]?.node.url ?? ''
       };
 
     return {
