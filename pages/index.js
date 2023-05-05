@@ -5,31 +5,39 @@ import { fetchProducts } from '@/utils/Shopify'
 import swell from 'swell-js'
 
 export async function getStaticProps() {
-
-  
-  const products = await fetchProducts();
-  return {
-    props: {
-      products
-    },
-    revalidate: 1,
-  }
+  // const products = await fetchProducts();
+  // return {
+  //   props: {
+  //     products
+  //   },
+  //   revalidate: 1,
+  // }
+  swell.init('faux-nostalgia', 'pk_YaAeXicBttHi8HXD9T6AVUsAs4qproCf');
+    const swellProducts = await swell.products.list({
+      limit: 25
+    });
+    return {
+        props: {
+            swellProducts
+        },
+        revalidate: 1,
+    }
 }
 
-export default function Home({products}) {
+export default function Home({swellProducts}) {
   
-  const [swellProducts, setSwellProducts] = useState([]);
+  // const [swellProducts, setSwellProducts] = useState([]);
 
-  useEffect(() => {
-    async function getSwellProducts() {
-      swell.init('faux-nostalgia', 'pk_YaAeXicBttHi8HXD9T6AVUsAs4qproCf');
-      const swellProducts = await swell.products.list({
-        limit: 25
-      })
-      setSwellProducts(swellProducts.results); 
-    }
-    getSwellProducts();
-  }, [])
+  // useEffect(() => {
+  //   async function getSwellProducts() {
+  //     swell.init('faux-nostalgia', 'pk_YaAeXicBttHi8HXD9T6AVUsAs4qproCf');
+  //     const swellProducts = await swell.products.list({
+  //       limit: 25
+  //     })
+  //     setSwellProducts(swellProducts.results); 
+  //   }
+  //   getSwellProducts();
+  // }, [])
 
   return (
     <div className='flex justify-center'>
@@ -41,7 +49,7 @@ export default function Home({products}) {
         {/* {products.map((product, index) => {
             return <ProductCard key={index} id={product.id} product={product}/>
         })} */}
-        {swellProducts.map((product, index) => {
+        {swellProducts.results.map((product, index) => {
             return <ProductCard key={index} price={product.price} id={product.id} productTitle={product.name} imageSrc={product.images[0].file.url} slug={product.slug} />
         })}
       </div>      
