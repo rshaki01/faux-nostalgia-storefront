@@ -4,9 +4,9 @@ import ProductCard from '@/components/ProductCard'
 import { fetchProducts } from '@/utils/Shopify'
 import swell from 'swell-js'
 
-swell.init('faux-nostalgia', 'pk_YaAeXicBttHi8HXD9T6AVUsAs4qproCf');
-
 export async function getStaticProps() {
+
+  
   const products = await fetchProducts();
   return {
     props: {
@@ -17,11 +17,12 @@ export async function getStaticProps() {
 }
 
 export default function Home({products}) {
-
+  
   const [swellProducts, setSwellProducts] = useState([]);
 
   useEffect(() => {
     async function getSwellProducts() {
+      swell.init('faux-nostalgia', 'pk_YaAeXicBttHi8HXD9T6AVUsAs4qproCf');
       const swellProducts = await swell.products.list({
         limit: 25
       })
