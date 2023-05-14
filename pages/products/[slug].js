@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import swell, { cart } from 'swell-js'
+import swell from 'swell-js'
 import Image from 'next/image';
 import SizeSelector from '@/components/SizeSelector';
 
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
     const swellProductsArr = swellProducts.results;
 
     const paths = swellProductsArr.map((product) => ({
-        params: { slug: product.slug}
+        params: { slug: product.id}
     }));
     return {
         paths,
@@ -35,14 +35,23 @@ export async function getStaticProps({params}) {
 
 const slugPage = ({swellProduct}) => {
 
-    const handleSubmit = async (e) => {
+    async function handleSubmit(e) {
       e.preventDefault();
-      alert('gang')
+      swell.init('faux-nostalgia', 'pk_YaAeXicBttHi8HXD9T6AVUsAs4qproCf');
+      await swell.cart.setItems([]);
+      await swell.cart.addItem({
+        product_id: swellProduct.id,
+        quantity: 1
+      })
+      
+      const cart = await swell.cart.get();
+      
+      window.location.href = `${cart.checkout_url}`;
 
-      let cart = await swell.cart.get()
     }
 
     const [quantity, setQuantity] = useState(1);
+
 
   return (
     <div className='flex gap-10 justify-center'>
@@ -62,7 +71,6 @@ const slugPage = ({swellProduct}) => {
                 />
              </div>
            </div>
-           <input type="submit" className="my-2 w-full bg-gray-100 hover:bg-gray-200 text-gray font-bold py-2 px-4 shadow-xl rounded" value="Sold Out"/>
            <input type="submit" className="my-2 w-full bg-gray-100 hover:bg-gray-200 text-gray font-bold py-2 px-4 shadow-xl rounded" value="Check Out"/>
          </form>
          <p className='p-2'>{swellProduct.description}</p>

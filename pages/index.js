@@ -33,6 +33,7 @@ export default function Home({swellProducts}) {
   //   getSwellProducts();
   // }, [])
 
+  console.log(swellProducts);
   return (
     <div className='flex justify-center'>
       <Head>

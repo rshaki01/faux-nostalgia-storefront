@@ -4,7 +4,7 @@ import Link from 'next/link'
 const ProductCard = ({price, id, productTitle, imageSrc, slug}) => {
 
   return (
-   <Link href={`/products/${slug}`}>
+   <Link href={`/products/${id}`}>
         <div className='p-4 w-64 shadow-xl rounded-2xl cursor-pointer hover:shadow-2xl hover:opacity-80'>
           <div className='rounded-2xl'>
             <img  src={imageSrc} alt=''/>           
