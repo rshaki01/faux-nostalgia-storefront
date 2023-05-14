@@ -35,6 +35,11 @@ export async function getStaticProps({params}) {
 
 const slugPage = ({swellProduct}) => {
 
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      alert('gang')
+    }
+
     const [quantity, setQuantity] = useState(1);
 
   return (
@@ -45,7 +50,7 @@ const slugPage = ({swellProduct}) => {
        <div className='w-1/3'>
          <h1 className='text-3xl'>{swellProduct.name}</h1>
          {/* <p className='text-lg pt-3'>${parseFloat(products[0].variants[0].price).toFixed(2)} USD</p> */}
-         <form>
+         <form onSubmit={handleSubmit}>
            <label className="block mb-2 text-slate-400">Size</label>
            <SizeSelector />
            <div className='grid grid-cols-1 md:grid-cols-2 my-2 gap-3'>
@@ -56,6 +61,7 @@ const slugPage = ({swellProduct}) => {
              </div>
            </div>
            <input type="submit" className="my-2 w-full bg-gray-100 hover:bg-gray-200 text-gray font-bold py-2 px-4 shadow-xl rounded" value="Sold Out"/>
+           <input type="submit" className="my-2 w-full bg-gray-100 hover:bg-gray-200 text-gray font-bold py-2 px-4 shadow-xl rounded" value="Check Out"/>
          </form>
          <p className='p-2'>{swellProduct.description}</p>
        </div>

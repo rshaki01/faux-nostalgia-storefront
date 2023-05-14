@@ -5,13 +5,7 @@ import { fetchProducts } from '@/utils/Shopify'
 import swell from 'swell-js'
 
 export async function getStaticProps() {
-  // const products = await fetchProducts();
-  // return {
-  //   props: {
-  //     products
-  //   },
-  //   revalidate: 1,
-  // }
+
   swell.init('faux-nostalgia', 'pk_YaAeXicBttHi8HXD9T6AVUsAs4qproCf');
     const swellProducts = await swell.products.list({
       limit: 25
