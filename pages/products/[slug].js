@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import swell from 'swell-js'
+import swell, { cart } from 'swell-js'
 import Image from 'next/image';
 import SizeSelector from '@/components/SizeSelector';
 
@@ -35,9 +35,11 @@ export async function getStaticProps({params}) {
 
 const slugPage = ({swellProduct}) => {
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
       alert('gang')
+
+      let cart = await swell.cart.get()
     }
 
     const [quantity, setQuantity] = useState(1);
