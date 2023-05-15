@@ -35,6 +35,10 @@ export async function getStaticProps({params}) {
 
 const slugPage = ({swellProduct}) => {
 
+    const [quantity, setQuantity] = useState(1);
+    const [sizeSelected, setSizeSelected] = useState('S');
+    const sizes = swellProduct.variants.results.map((variant) => (variant.name));
+
     async function handleSubmit(e) {
       e.preventDefault();
       swell.init('faux-nostalgia', 'pk_YaAeXicBttHi8HXD9T6AVUsAs4qproCf');
@@ -43,15 +47,13 @@ const slugPage = ({swellProduct}) => {
         product_id: swellProduct.id,
         quantity: 1
       })
-      
       const cart = await swell.cart.get();
-      
       window.location.href = `${cart.checkout_url}`;
-
     }
 
-    const [quantity, setQuantity] = useState(1);
-
+    const handleSizeSelected = (size) => {
+      setSizeSelected(size === sizeSelected ? '' : size);
+    }
 
   return (
     <div className='flex gap-10 justify-center'>
@@ -60,10 +62,16 @@ const slugPage = ({swellProduct}) => {
        </div>
        <div className='w-1/3'>
          <h1 className='text-3xl'>{swellProduct.name}</h1>
-         {/* <p className='text-lg pt-3'>${parseFloat(products[0].variants[0].price).toFixed(2)} USD</p> */}
+         <p className='text-lg pt-3'>${parseFloat(swellProduct.price).toFixed(2)} USD</p>
          <form onSubmit={handleSubmit}>
            <label className="block mb-2 text-slate-400">Size</label>
-           <SizeSelector />
+           <div className='flex gap-2'>
+            {sizes.map((size) => (
+              <p key={size} onClick={() => handleSizeSelected(size)} className={`rounded-lg px-5 py-1 cursor-pointer ${sizeSelected === size ? 'bg-black text-white' : 'bg-white'}`}>
+                  {size}
+              </p>
+            ))}
+           </div>
            <div className='grid grid-cols-1 md:grid-cols-2 my-2 gap-3'>
              <div className="">
                <label className="block mb-2 text-slate-400">Quantity</label>
@@ -71,7 +79,7 @@ const slugPage = ({swellProduct}) => {
                 />
              </div>
            </div>
-           <input type="submit" className="my-2 w-full bg-gray-100 hover:bg-gray-200 text-gray font-bold py-2 px-4 shadow-xl rounded" value="Check Out"/>
+           <input type="submit" className="my-2 w-full bg-gray-100 hover:bg-gray-200 text-gray font-bold py-2 px-4 shadow-xl rounded cursor-pointer" value="Check Out"/>
          </form>
          <p className='p-2'>{swellProduct.description}</p>
        </div>
