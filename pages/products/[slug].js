@@ -37,7 +37,8 @@ const slugPage = ({swellProduct}) => {
 
     const [quantity, setQuantity] = useState(1);
     const [sizeSelected, setSizeSelected] = useState('S');
-    const sizes = swellProduct.variants.results.map((variant) => (variant.name));
+    console.log(swellProduct);
+    const sizes = swellProduct.options[0].values.map((variant) => (variant.name));
 
     async function handleSubmit(e) {
       e.preventDefault();
