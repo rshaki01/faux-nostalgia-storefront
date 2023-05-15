@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import swell from 'swell-js'
 import Image from 'next/image';
-import SizeSelector from '@/components/SizeSelector';
 
 export async function getStaticPaths() {
 
@@ -32,14 +31,14 @@ export async function getStaticProps({params}) {
     }
 }
 
-
 const slugPage = ({swellProduct}) => {
 
     const [quantity, setQuantity] = useState(1);
     const [sizeSelected, setSizeSelected] = useState('S');
     console.log(swellProduct);
-    const sizes = swellProduct.options[0].values.map((variant) => (variant.name));
-
+    const variantName = swellProduct.options[0] ? swellProduct.options[0].name : '';
+    const sizes = swellProduct.options[0] ? swellProduct.options[0].values.map((variant) => (variant.name)) : [];
+    
     async function handleSubmit(e) {
       e.preventDefault();
       swell.init('faux-nostalgia', 'pk_YaAeXicBttHi8HXD9T6AVUsAs4qproCf');
@@ -65,7 +64,7 @@ const slugPage = ({swellProduct}) => {
          <h1 className='text-3xl'>{swellProduct.name}</h1>
          <p className='text-lg pt-3'>${parseFloat(swellProduct.price).toFixed(2)} USD</p>
          <form onSubmit={handleSubmit}>
-           <label className="block mb-2 text-slate-400">Size</label>
+           <label className="block my-2 text-slate-400">{variantName}</label>
            <div className='flex gap-2'>
             {sizes.map((size) => (
               <p key={size} onClick={() => handleSizeSelected(size)} className={`rounded-lg px-5 py-1 cursor-pointer ${sizeSelected === size ? 'bg-black text-white' : 'bg-white'}`}>
