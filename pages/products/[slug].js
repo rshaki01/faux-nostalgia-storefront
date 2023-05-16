@@ -35,6 +35,7 @@ const slugPage = ({swellProduct}) => {
 
     const [quantity, setQuantity] = useState(1);
     const [sizeSelected, setSizeSelected] = useState('S');
+    const [imageSelected, setImageSelected] = useState(swellProduct.images[0].file.url);
     console.log(swellProduct);
     const variantName = swellProduct.options[0] ? swellProduct.options[0].name : '';
     const sizes = swellProduct.options[0] ? swellProduct.options[0].values.map((variant) => (variant.name)) : [];
@@ -45,7 +46,7 @@ const slugPage = ({swellProduct}) => {
       await swell.cart.setItems([]);
       await swell.cart.addItem({
         product_id: swellProduct.id,
-        quantity: 1
+        quantity: quantity
       })
       const cart = await swell.cart.get();
       window.location.href = `${cart.checkout_url}`;
@@ -55,10 +56,19 @@ const slugPage = ({swellProduct}) => {
       setSizeSelected(size === sizeSelected ? '' : size);
     }
 
+    const handleImageSelected = (imageSrc) => {
+      setImageSelected(imageSrc);
+    }
+
   return (
     <div className='flex gap-10 justify-center'>
        <div className='w-1/3'>
-         <Image src={swellProduct.images[0].file.url} alt="" width={640} height={640}/>
+         <Image className='p-4' src={imageSelected} alt="" width={640} height={640}/>
+         <div className='flex'>
+          {swellProduct.images.map((image) => (
+            <Image className='cursor-pointer' onClick={() => handleImageSelected(image.file.url)} src={image.file.url} alt="" width={80} height={80}/>
+          ))}
+         </div>
        </div>
        <div className='w-1/3'>
          <h1 className='text-3xl'>{swellProduct.name}</h1>
@@ -81,7 +91,7 @@ const slugPage = ({swellProduct}) => {
            </div>
            <input type="submit" className="my-2 w-full bg-gray-100 hover:bg-gray-200 text-gray font-bold py-2 px-4 shadow-xl rounded cursor-pointer" value="Check Out"/>
          </form>
-         <p className='p-2'>{swellProduct.description}</p>
+         <p className='mt-2 p-2'>{swellProduct.description}</p>
        </div>
     </div>
   )
