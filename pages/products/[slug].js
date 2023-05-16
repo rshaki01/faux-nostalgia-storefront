@@ -34,7 +34,7 @@ export async function getStaticProps({params}) {
 const slugPage = ({swellProduct}) => {
 
     const [quantity, setQuantity] = useState(1);
-    const [sizeSelected, setSizeSelected] = useState('S');
+    const [sizeSelected, setSizeSelected] = useState('Small');
     const [imageSelected, setImageSelected] = useState(swellProduct.images[0].file.url);
     console.log(swellProduct);
     const variantName = swellProduct.options[0] ? swellProduct.options[0].name : '';
@@ -46,7 +46,10 @@ const slugPage = ({swellProduct}) => {
       await swell.cart.setItems([]);
       await swell.cart.addItem({
         product_id: swellProduct.id,
-        quantity: quantity
+        quantity: quantity,
+        options: [
+          {name: variantName, value: sizeSelected}
+        ]
       })
       const cart = await swell.cart.get();
       window.location.href = `${cart.checkout_url}`;
