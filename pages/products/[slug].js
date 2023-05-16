@@ -61,8 +61,9 @@ const slugPage = ({swellProduct}) => {
     }
 
   return (
-    <div className='flex gap-10 justify-center'>
-       <div className='w-1/3'>
+    <div className='flex flex-col md:flex-row gap-10 justify-center'>
+       {/*Image Gallery */}
+       <div className='md:w-1/3 md:order-1'>
          <Image className='p-4' src={imageSelected} alt="" width={640} height={640}/>
          <div className='flex'>
           {swellProduct.images.map((image) => (
@@ -70,26 +71,28 @@ const slugPage = ({swellProduct}) => {
           ))}
          </div>
        </div>
-       <div className='w-1/3'>
+       {/*Product Information */}
+       <div className='text-center md:w-1/3 md:order-2 md:text-left'>
          <h1 className='text-3xl'>{swellProduct.name}</h1>
          <p className='text-lg pt-3'>${parseFloat(swellProduct.price).toFixed(2)} USD</p>
-         <form onSubmit={handleSubmit}>
+         <form onSubmit={handleSubmit} className='text-center md:text-left'>
            <label className="block my-2 text-slate-400">{variantName}</label>
-           <div className='flex gap-2'>
+           {/* Size Selector */}
+           <div className='flex gap-2 justify-center'>
             {sizes.map((size) => (
               <p key={size} onClick={() => handleSizeSelected(size)} className={`rounded-lg px-5 py-1 cursor-pointer ${sizeSelected === size ? 'bg-black text-white' : 'bg-white'}`}>
                   {size}
               </p>
             ))}
            </div>
+           {/* Quantity Selector */}
            <div className='grid grid-cols-1 md:grid-cols-2 my-2 gap-3'>
-             <div className="">
-               <label className="block mb-2 text-slate-400">Quantity</label>
-               <input className="rounded-lg border border-gray-700  p-2" type="number" min={1} value={quantity} onChange={(e) => setQuantity(e.target.value)}
-                />
+             <div>
+              <label className="block mb-2 text-slate-400">Quantity</label>
+              <input className="rounded-lg border border-gray-700  p-2" type="number" min={1} value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
              </div>
            </div>
-           <input type="submit" className="my-2 w-full bg-gray-100 hover:bg-gray-200 text-gray font-bold py-2 px-4 shadow-xl rounded cursor-pointer" value="Check Out"/>
+           <input type="submit" className="my-2 w-1/2 bg-gray-100 hover:bg-gray-200 text-gray font-bold py-2 px-4 shadow-xl rounded cursor-pointer" value="Check Out"/>
          </form>
          <p className='mt-2 p-2'>{swellProduct.description}</p>
        </div>
