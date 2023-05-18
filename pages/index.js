@@ -35,7 +35,7 @@ export default function Home({swellProducts}) {
 
   // console.log(swellProducts);
   return (
-    <div className='flex justify-center'>
+    <div className='mt-20'>
       <Head>
         <title>Faux Nostalgia</title>
       </Head>
